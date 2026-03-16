@@ -1,0 +1,83 @@
+transaction_id,date,time,merchant,category,amount,balance,status
+TXN100021,2025-12-01,09:15,Zelle Payment,Transfer,-21.46,7739.74,Completed
+TXN100017,2025-12-02,08:49,Starbucks,Food & Drink,-581.05,8801.61,Completed
+TXN100034,2025-12-02,15:30,Delta Airlines,Travel,-722.15,7752.15,Completed
+TXN100028,2025-12-05,15:13,Starbucks,Food & Drink,-439.46,6527.12,Completed
+TXN100040,2025-12-06,10:59,Venmo Transfer,Transfer,-560.48,6435.76,Completed
+TXN100051,2025-12-06,21:15,Delta Airlines,Travel,1394.52,7126.16,Completed
+TXN100061,2025-12-06,21:46,Amazon,Online Shopping,-444.33,4709.79,Completed
+TXN100031,2025-12-07,10:51,Uber Eats,Food & Drink,-88.16,5385.22,Completed
+TXN100011,2025-12-08,02:13,Amazon,Online Shopping,-685.26,11433.46,Completed
+TXN100022,2025-12-08,02:48,CVS Pharmacy,Health,1714.98,9454.72,Completed
+TXN100007,2025-12-09,12:17,WIRE TRANSFER INT,International,-496.96,13304.01,Completed
+TXN100016,2025-12-09,17:55,CVS Pharmacy,Health,-846.72,9382.66,Completed
+TXN100009,2025-12-10,14:24,Shell Gas,Auto & Transport,-456.35,12705.22,Completed
+TXN100033,2025-12-10,17:53,Marriott Hotels,Travel,2130.36,8474.3,Completed
+TXN100043,2025-12-10,02:56,Apple Store,Shopping,-229.09,7989.08,Completed
+TXN100070,2025-12-10,12:31,Uber Eats,Food & Drink,-491.44,3405.49,Completed
+TXN100068,2025-12-11,07:43,Uber Eats,Food & Drink,-539.84,937.09,Completed
+TXN100032,2025-12-14,14:15,Walmart,Groceries,958.72,6343.94,Completed
+TXN100046,2025-12-14,22:21,Shell Gas,Auto & Transport,-235.13,6885.99,Completed
+TXN100052,2025-12-14,19:47,Apple Store,Shopping,-752.09,6374.07,Completed
+TXN100000,2025-12-15,17:05,CASINO ONLINE,Gambling,-65.37,12334.63,Completed
+TXN100063,2025-12-16,10:25,Netflix,Entertainment,-433.52,3469.47,Completed
+TXN100013,2025-12-19,23:37,Walmart,Groceries,-634.52,10614.27,Completed
+TXN100037,2025-12-20,17:03,Walmart,Groceries,-823.56,7558.51,Completed
+TXN100050,2025-12-20,13:08,Marriott Hotels,Travel,-316.99,5731.64,Completed
+TXN100053,2025-12-20,05:56,Walmart,Groceries,-735.59,5638.48,Completed
+TXN100049,2025-12-21,03:04,Apple Store,Shopping,-601.29,6048.63,Completed
+TXN100055,2025-12-21,06:52,Starbucks,Food & Drink,1676.73,7164.72,Completed
+TXN100019,2025-12-23,20:32,Starbucks,Food & Drink,-740.59,7902.71,Completed
+TXN100065,2025-12-23,09:18,Netflix,Entertainment,-348.13,2761.06,Completed
+TXN100039,2025-12-24,07:37,CRYPTO BUY,Crypto,-67.98,6996.24,Completed
+TXN100057,2025-12-25,08:22,Netflix,Entertainment,-735.38,5752.27,Completed
+TXN100020,2025-12-26,16:58,Delta Airlines,Travel,-141.51,7761.2,Completed
+TXN100025,2025-12-26,14:57,Venmo Transfer,Transfer,-845.9,7226.44,Completed
+TXN100062,2025-12-26,19:20,Starbucks,Food & Drink,-806.8,3902.99,Completed
+TXN100047,2025-12-27,01:05,Marriott Hotels,Travel,-228.07,6657.92,Completed
+TXN100066,2025-12-27,14:28,CVS Pharmacy,Health,-517.63,2243.43,Completed
+TXN100035,2025-12-28,14:18,Amazon,Online Shopping,1476.05,9228.2,Completed
+TXN100067,2025-12-28,05:42,Delta Airlines,Travel,-766.5,1476.93,Completed
+TXN100027,2025-12-30,07:04,Amazon,Online Shopping,-64.99,6966.58,Completed
+TXN100077,2025-12-31,10:20,Starbucks,Food & Drink,-607.95,-677.56,Completed
+TXN100044,2026-01-01,09:39,Shell Gas,Auto & Transport,-375.27,7613.81,Completed
+TXN100073,2026-01-01,21:33,Starbucks,Food & Drink,-390.71,1614.26,Completed
+TXN100005,2026-01-03,02:35,Target,Shopping,2805.74,14554.18,Completed
+TXN100041,2026-01-03,04:42,Target,Shopping,-270.49,6165.27,Completed
+TXN100059,2026-01-03,11:46,Netflix,Entertainment,-37.33,5256.84,Completed
+TXN100076,2026-01-03,16:31,Marriott Hotels,Travel,-543.82,-69.61,Completed
+TXN200000,2026-01-03,02:35,Target,Shopping,2805.74,14554.18,Completed
+TXN100010,2026-01-04,10:53,Uber Eats,Food & Drink,-586.5,12118.72,Completed
+TXN100003,2026-01-05,13:21,Amazon,Online Shopping,-646.19,11006.65,Completed
+TXN100004,2026-01-05,11:38,Delta Airlines,Travel,741.79,11748.44,Completed
+TXN100006,2026-01-07,06:45,CVS Pharmacy,Health,-753.21,13800.97,Completed
+TXN100064,2026-01-07,21:47,Walmart,Groceries,-360.28,3109.19,Completed
+TXN100042,2026-01-08,18:06,Delta Airlines,Travel,2052.9,8218.17,Completed
+TXN100069,2026-01-09,19:54,Walmart,Groceries,2959.84,3896.93,Completed
+TXN100038,2026-01-10,16:05,RAPID CASH ADV,Cash Advance,-494.29,7064.22,Completed
+TXN100060,2026-01-10,06:16,Apple Store,Shopping,-102.72,5154.12,Completed
+TXN100079,2026-01-12,12:57,Venmo Transfer,Transfer,-57.61,-1227.25,Completed
+TXN100018,2026-01-13,08:32,UNKNOWN MERCHANT 9482,Unknown,-158.31,8643.3,Completed
+TXN300001,2026-01-15,02:47,WIRE TRANSFER INT,International,-4899.0,-6126.25,Completed
+TXN100071,2026-01-21,03:49,Uber Eats,Food & Drink,-586.04,2819.45,Completed
+TXN100030,2026-01-22,13:29,Starbucks,Food & Drink,-561.84,5473.38,Completed
+TXN100054,2026-01-22,07:17,CASINO ONLINE,Gambling,-150.49,5487.99,Completed
+TXN100014,2026-01-24,04:32,Venmo Transfer,Transfer,-310.89,10303.38,Completed
+TXN100036,2026-01-24,22:31,Target,Shopping,-846.13,8382.07,Completed
+TXN100048,2026-01-24,20:16,Amazon,Online Shopping,-8.0,6649.92,Completed
+TXN100072,2026-01-24,01:35,Delta Airlines,Travel,-814.48,2004.97,Completed
+TXN100008,2026-01-28,21:17,Chase ATM,Cash Withdrawal,-142.44,13161.57,Completed
+TXN100056,2026-01-28,00:42,Marriott Hotels,Travel,-677.07,6487.65,Completed
+TXN100015,2026-02-02,13:38,CRYPTO BUY,Crypto,-74.0,10229.38,Completed
+TXN100075,2026-02-03,15:28,Apple Store,Shopping,-381.8,474.21,Completed
+TXN100058,2026-02-04,03:56,Marriott Hotels,Travel,-458.1,5294.17,Completed
+TXN100026,2026-02-05,18:35,Walmart,Groceries,-194.87,7031.57,Completed
+TXN100024,2026-02-06,23:44,Venmo Transfer,Transfer,-819.89,8072.34,Completed
+TXN100045,2026-02-06,08:07,RAPID CASH ADV,Cash Advance,-492.69,7121.12,Completed
+TXN100023,2026-02-07,05:16,Shell Gas,Auto & Transport,-562.49,8892.23,Completed
+TXN100029,2026-02-08,15:51,CVS Pharmacy,Health,-491.9,6035.22,Completed
+TXN100078,2026-02-08,13:26,WIRE TRANSFER INT,International,-492.08,-1169.64,Completed
+TXN100002,2026-02-10,14:37,Uber Eats,Food & Drink,-597.62,11652.84,Completed
+TXN100074,2026-02-10,23:57,Delta Airlines,Travel,-758.25,856.01,Completed
+TXN100012,2026-02-11,20:29,Chase ATM,Cash Withdrawal,-184.67,11248.79,Completed
+TXN100001,2026-02-14,19:01,Amazon,Online Shopping,-84.17,12250.46,Completed

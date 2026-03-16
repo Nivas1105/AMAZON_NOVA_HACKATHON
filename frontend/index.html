@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nova Risk Analyst — AI Financial Risk Detection</title>
+  <meta name="description"
+    content="AI-powered financial risk analyst using Amazon Nova. Upload bank statements and transaction files to detect fraud, anomalies, and risk patterns instantly." />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Nova Risk Analyst — AI Financial Risk Detection" />
+  <meta property="og:description"
+    content="Upload bank statements to detect fraud, anomalies, and risk patterns instantly using Amazon Nova 2 Lite on AWS Bedrock." />
+  <meta property="og:type" content="website" />
+  <!-- Favicon -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬡</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+
+  <!-- ── Nav ──────────────────────────────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <span class="logo-icon">⬡</span>
+        <span class="logo-text">Nova <span class="accent">Risk</span> Analyst</span>
+      </div>
+      <div class="nav-pills">
+        <span class="pill">Powered by Amazon Nova 2 Lite</span>
+        <span class="pill pill-aws">AWS Bedrock</span>
+        <span class="pill pill-green" id="demoModePill" style="display:none;">⚡ Demo Mode</span>
+      </div>
+      <!-- chat FAB moved to floating widget below -->
+    </div>
+  </nav>
+
+  <!-- ── Hero ─────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🏆 AWS Nova Hackathon 2025 — Multimodal Understanding</div>
+      <h1 class="hero-title">
+        AI-Powered<br />
+        <span class="gradient-text">Financial Risk Detection</span>
+      </h1>
+      <p class="hero-subtitle">
+        Upload bank statements, transaction files, or account images.<br />
+        Amazon Nova 2 Lite analyzes them for fraud patterns, anomalies, and risk indicators — in seconds.
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-n">12</span><span class="stat-l">Risk Rules</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-n">3</span><span class="stat-l">File Formats</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-n">
+            < 5s</span><span class="stat-l">Analysis Time</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-n">3</span><span class="stat-l">Pipeline Stages</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Main App ──────────────────────────────────────────────────── -->
+  <main class="app-main">
+
+    <!-- Upload Panel -->
+    <section class="panel upload-panel" id="upload-section">
+      <h2 class="panel-title">Upload Financial Document</h2>
+      <p class="panel-sub">Supports CSV transactions, PDF statements, and bank statement images</p>
+
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept=".csv,.pdf,.png,.jpg,.jpeg,.webp" hidden />
+        <div class="dz-icon" id="dzIcon">📄</div>
+        <div class="dz-text" id="dzText">
+          <strong>Drop your file here</strong> or <span class="dz-link" id="dzLink">browse</span>
+        </div>
+        <div class="dz-hint">PDF, CSV, PNG, JPG, WEBP · Max 20 MB</div>
+        <div class="dz-formats">
+          <span class="fmt-tag">📊 CSV Transactions</span>
+          <span class="fmt-tag">📄 PDF Statement</span>
+          <span class="fmt-tag">🖼️ Bank Image</span>
+        </div>
+      </div>
+
+      <div class="selected-file" id="selectedFile" style="display:none;">
+        <span class="file-icon" id="fileIcon">📄</span>
+        <div class="file-info">
+          <span class="file-name" id="fileName"></span>
+          <span class="file-size" id="fileSize"></span>
+        </div>
+        <button class="btn-remove" id="removeFile" title="Remove file">✕</button>
+      </div>
+
+      <button class="btn-analyze" id="analyzeBtn" disabled>
+        <span class="btn-icon">🔍</span>
+        <span id="analyzeBtnText">Analyze with Amazon Nova 2 Lite</span>
+      </button>
+
+      <!-- Demo Button -->
+      <div class="demo-divider"><span>or</span></div>
+      <button class="btn-demo" id="demoBtn">
+        <span>▶</span>
+        <span>Try Live Demo — No File Needed</span>
+        <span class="demo-badge">instant</span>
+      </button>
+
+      <div class="loading-bar" id="loadingBar" style="display:none;">
+        <div class="loading-fill" id="loadingFill"></div>
+      </div>
+      <div class="loading-msg" id="loadingMsg" style="display:none;">
+        <div class="spinner"></div>
+        <span id="loadingText">Sending to Amazon Nova 2 Lite…</span>
+      </div>
+    </section>
+
+    <!-- ── Results Dashboard ─────────────────────────────────────── -->
+    <section class="results-section" id="resultsSection" style="display:none;">
+
+      <!-- Demo notice -->
+      <div class="demo-notice" id="demoNotice" style="display:none;">
+        ⚡ <strong>Demo Mode</strong> — This is a pre-baked result. Upload a real file to run the live 3-stage pipeline.
+      </div>
+
+      <!-- Export buttons -->
+      <div class="export-bar">
+        <button class="btn-export" id="btnCopy" title="Copy summary to clipboard">📋 Copy Summary</button>
+        <button class="btn-export" id="btnDownload" title="Download full JSON results">📥 Export JSON</button>
+      </div>
+
+      <!-- Pipeline stages badge -->
+      <div class="pipeline-bar" id="pipelineBar">
+        <span class="pipeline-stage done" id="pStage1">⬡ Stage 1: OCR / Parsing</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-stage done" id="pStage2">📋 Stage 2: Rule Engine</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-stage done" id="pStage3">🤖 Stage 3: Amazon Nova 2 Lite AI</span>
+      </div>
+
+      <!-- Risk Score Card -->
+      <div class="risk-header">
+        <div class="risk-score-card" id="riskScoreCard">
+          <div class="rs-label">Overall Risk Score</div>
+          <div class="rs-gauge">
+            <svg viewBox="0 0 200 120" class="gauge-svg">
+              <defs>
+                <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#22c55e" />
+                  <stop offset="50%" style="stop-color:#f59e0b" />
+                  <stop offset="100%" style="stop-color:#ef4444" />
+                </linearGradient>
+              </defs>
+              <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#1e293b" stroke-width="18"
+                stroke-linecap="round" />
+              <path id="gaugeFill" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGrad)"
+                stroke-width="18" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251" />
+              <text x="100" y="90" text-anchor="middle" class="gauge-num" id="gaugeNum">0</text>
+              <text x="100" y="108" text-anchor="middle" class="gauge-sub">/ 100</text>
+            </svg>
+          </div>
+          <div class="rs-badge" id="rsBadge">—</div>
+        </div>
+
+        <div class="risk-summary-block">
+          <h3 class="block-title">Executive Summary</h3>
+          <p class="risk-summary-text" id="riskSummary">—</p>
+          <div class="txn-stats" id="txnStats"></div>
+        </div>
+      </div>
+
+      <!-- ── Nova AI Section label ──────────────────────── -->
+      <div class="section-divider nova-divider">
+        <span class="divider-icon">🤖</span>
+        <span class="divider-label">Amazon Nova 2 Lite — Independent AI Analysis</span>
+        <span class="divider-badge nova-badge">Amazon Nova 2 Lite</span>
+      </div>
+
+      <!-- Nova AI Findings & Anomalies Row -->
+      <div class="cards-row">
+        <div class="card nova-card" id="fraudFlagsCard">
+          <div class="card-header">
+            <span class="card-icon">🤖</span>
+            <h3 class="card-title">Nova AI Findings <span class="source-tag nova-source-tag">Amazon Nova 2 Lite</span></h3>
+            <span class="card-count nova-count" id="fraudCount">0</span>
+          </div>
+          <ul class="flag-list" id="fraudFlags"></ul>
+        </div>
+
+        <div class="card nova-card" id="anomaliesCard">
+          <div class="card-header">
+            <span class="card-icon">🔬</span>
+            <h3 class="card-title">Nova Anomaly Detection <span class="source-tag nova-source-tag">Amazon Nova 2 Lite</span></h3>
+            <span class="card-count nova-count" id="anomalyCount">0</span>
+          </div>
+          <ul class="flag-list" id="anomaliesList"></ul>
+        </div>
+      </div>
+
+      <!-- Transaction Chart -->
+      <div class="card chart-card" id="chartCard" style="display:none;">
+        <div class="card-header">
+          <span class="card-icon">📈</span>
+          <h3 class="card-title">Risk Categories Breakdown</h3>
+        </div>
+        <div class="chart-container">
+          <canvas id="riskChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Nova Reasoning (collapsible) -->
+      <details class="nova-reasoning-details" id="novaReasoningDetails" style="display:none;">
+        <summary class="nova-reasoning-summary">
+          <span class="nr-icon">🤖</span>
+          <span class="nr-label">Amazon Nova 2 Lite — Raw Reasoning Output</span>
+          <span class="nr-badge">Expand to inspect AI thinking</span>
+          <span class="nr-chevron">›</span>
+        </summary>
+        <div class="nova-reasoning-body">
+          <div class="nova-reasoning-note">
+            💡 This is the unfiltered JSON response from Amazon Nova 2 Lite before post-processing. It shows the full AI reasoning chain, confidence in rule findings, and any patterns the model independently identified.
+          </div>
+          <pre class="nova-reasoning-pre" id="novaReasoningPre"></pre>
+        </div>
+      </details>
+
+
+      <!-- ── Rule Engine Section label ─────────────────── -->
+      <div class="section-divider rule-divider">
+        <span class="divider-icon">📋</span>
+        <span class="divider-label">Python Rule Engine — Deterministic Fraud Checks</span>
+        <span class="divider-badge rule-badge">Deterministic</span>
+      </div>
+
+      <!-- Rule Engine Findings (deterministic) -->
+      <div class="card rule-findings-card" id="ruleFindingsCard" style="display:none;">
+        <div class="card-header">
+          <span class="card-icon">📋</span>
+          <h3 class="card-title">Rule Engine Findings <span class="source-tag">12 Rules</span></h3>
+          <span class="card-count" id="ruleCount">0</span>
+        </div>
+        <div class="rule-findings-list" id="ruleFindingsList"></div>
+      </div>
+
+      <!-- Audit Trail -->
+      <div class="card audit-card" id="auditCard" style="display:none;">
+        <div class="card-header">
+          <span class="card-icon">🔍</span>
+          <h3 class="card-title">Pipeline Audit Trail <span class="source-tag">3 Stages</span></h3>
+        </div>
+        <div class="audit-trail" id="auditTrail"></div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="card recs-card">
+        <div class="card-header">
+          <span class="card-icon">💡</span>
+          <h3 class="card-title">Recommendations</h3>
+        </div>
+        <ol class="recs-list" id="recsList"></ol>
+      </div>
+
+    </section>
+
+  <!-- ── Chat Side Drawer ────────────────────────────────── -->
+  <div class="chat-drawer" id="chatDrawer">
+    <div class="chat-drawer-overlay" id="chatOverlay"></div>
+    <div class="chat-panel" id="chatPanel">
+      <div class="chat-header">
+        <span class="chat-icon">🤖</span>
+        <div style="flex:1">
+          <h3 class="chat-title">Ask Nova About This Document</h3>
+          <p class="chat-sub">Follow-up questions answered by Amazon Nova 2 Lite</p>
+        </div>
+        <button class="chat-close" id="chatClose" title="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-msg assistant">
+          <div class="msg-avatar">N</div>
+          <div class="msg-bubble">
+            I've analyzed your document. Ask me anything — top suspicious transactions, risk breakdown, regulatory
+            concerns, or recommended next steps.
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-suggestions" id="chatSuggestions">
+        <button class="suggestion" data-q="What are the top 3 most suspicious transactions?">Top suspicious transactions</button>
+        <button class="suggestion" data-q="Are there any AML or structuring patterns?">AML / structuring patterns</button>
+        <button class="suggestion" data-q="What regulatory actions should I take?">Regulatory actions</button>
+        <button class="suggestion" data-q="Summarize the high-risk categories in this account.">High-risk categories</button>
+      </div>
+
+      <div class="chat-input-row">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Ask a follow-up question…" maxlength="500" />
+        <button class="chat-send" id="chatSend" title="Send">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13" />
+            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  </main>
+
+  <!-- ── How It Works ──────────────────────────────────────────────── -->
+  <section class="how-section">
+    <h2 class="section-title">How It Works</h2>
+    <div class="steps-row">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon">📤</div>
+        <h4>Upload Document</h4>
+        <p>Drop a CSV, PDF, or bank statement image. Files never leave your session.</p>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon">⬡</div>
+        <h4>Textract OCR</h4>
+        <p>Amazon Textract extracts structured table data from PDFs and images with confidence scores.</p>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon">📋</div>
+        <h4>12 Risk Rules</h4>
+        <p>A deterministic Python rule engine checks for structuring, velocity spikes, duplicates, and more.</p>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-icon">🤖</div>
+        <h4>Amazon Nova 2 Lite AI</h4>
+        <p>Amazon Nova 2 Lite reasons over the evidence to produce a holistic risk score and recommendations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Tech Stack ────────────────────────────────────────────────── -->
+  <section class="tech-section">
+    <h2 class="section-title">Built With</h2>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-icon">🤖</div>
+        <div class="tech-name">Amazon Nova 2 Lite</div>
+        <div class="tech-desc">Multimodal LLM for AI reasoning, risk scoring, and chat Q&A</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🔍</div>
+        <div class="tech-name">Amazon Textract</div>
+        <div class="tech-desc">OCR stage — extracts structured tables from PDFs and images</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">⚡</div>
+        <div class="tech-name">FastAPI + Python</div>
+        <div class="tech-desc">High-performance async backend with a 3-stage pipeline</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">📋</div>
+        <div class="tech-name">Rule Engine</div>
+        <div class="tech-desc">12 deterministic fraud rules — no ML, no hallucinations</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">☁️</div>
+        <div class="tech-name">AWS Bedrock</div>
+        <div class="tech-desc">Managed AI inference — secure, scalable, production-ready</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🎨</div>
+        <div class="tech-name">Vanilla JS + CSS</div>
+        <div class="tech-desc">Zero-framework frontend — fast, accessible, responsive</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>Built with ❤️ for the AWS Nova Hackathon 2025 · Powered by <strong>Amazon Nova 2 Lite</strong> on AWS Bedrock</p>
+    <p class="footer-sub">3-Stage Pipeline: Textract OCR → Rule Engine → Amazon Nova 2 Lite AI</p>
+  </footer>
+
+  <!-- Floating Chat Widget (ZS-style) -->
+  <div class="nova-chat-widget" id="chatFab" style="display:none;">
+    <div class="nova-chat-pill" id="novaChatPill">
+      <span>Chat with Nova here!</span>
+      <div class="nova-chat-pill-pointer"></div>
+    </div>
+    <button class="nova-chat-circle" id="novaChatCircle" title="Ask Nova about this document">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      <span class="chat-fab-badge" id="chatFabBadge"></span>
+    </button>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+
+</html>
